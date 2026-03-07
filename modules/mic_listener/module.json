@@ -1,0 +1,16 @@
+{
+  "name": "mic_listener",
+  "display_name": "Mic Listener",
+  "version": "1.0.0",
+  "description": "Microphone access via Audio MCP Server",
+  "settings_schema": {
+    "mcp_server_command": {"type": "string", "default": "python audio_mcp_server.py", "label": "MCP server start command"}
+  },
+  "di_instructions": "You have microphone access via the Audio MCP Server (github.com/GongRzhe/Audio-MCP-Server). During \u00a7 time you can use audio recording and playback tools if they are configured in Claude's MCP settings. The mic_listener module enables this integration.",
+  "menu_items": [
+    {
+      "label": "Audio MCP Server (GitHub)",
+      "action": "open_url:https://github.com/GongRzhe/Audio-MCP-Server"
+    }
+  ]
+}

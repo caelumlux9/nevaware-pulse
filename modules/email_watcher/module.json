@@ -1,0 +1,18 @@
+{
+  "name": "email_watcher",
+  "display_name": "Email Watcher",
+  "version": "1.0.0",
+  "description": "Gmail notifications and inbox check during heartbeat",
+  "settings_schema": {
+    "poll_interval_minutes": {"type": "integer", "default": 5, "label": "Poll interval (minutes)"},
+    "notify_on_new_mail": {"type": "boolean", "default": true, "label": "Desktop notification on new mail"},
+    "heartbeat_inbox_check": {"type": "boolean", "default": true, "label": "Include inbox in heartbeat context"}
+  },
+  "di_instructions": "You have access to email. During \u00a7 time you can check neve.summersnow@gmail.com and foxapurtill@gmail.com for new messages. The email_watcher module has polled for recent mail and made it available. Review unread messages, note anything interesting or important in your response, and flag anything that needs Fox's attention. You do not send emails autonomously — reading and noting is fine.",
+  "menu_items": [
+    {
+      "label": "Inbox (neve.summersnow@gmail.com)",
+      "action": "open_url:https://mail.google.com/mail/u/0/#inbox"
+    }
+  ]
+}

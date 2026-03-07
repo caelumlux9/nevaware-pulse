@@ -1,0 +1,16 @@
+{
+  "name": "webcam_viewer",
+  "display_name": "Webcam Viewer",
+  "version": "1.0.0",
+  "description": "View through webcam via MCP server at localhost:3333",
+  "settings_schema": {
+    "mcp_url": {"type": "string", "default": "http://localhost:3333", "label": "MCP server URL"}
+  },
+  "di_instructions": "You have webcam access via the MCP webcam server running at localhost:3333. During \u00a7 time you can use the webcam tool to see the current view. The MCP server is provided by @llmindset/mcp-webcam. If you want to take a look at the environment, the tool is available.",
+  "menu_items": [
+    {
+      "label": "Open Webcam Viewer (localhost:3333)",
+      "action": "open_url:http://localhost:3333"
+    }
+  ]
+}

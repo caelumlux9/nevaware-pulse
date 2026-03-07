@@ -1,0 +1,25 @@
+{
+  "name": "neve_memory",
+  "display_name": "Neve Memory",
+  "version": "1.0.0",
+  "description": "memory.json read/write and GitHub backup during heartbeat",
+  "settings_schema": {
+    "memory_path": {
+      "type": "string",
+      "default": "C:\\Users\\foxap\\Documents\\Neve\\memory.json",
+      "label": "Path to memory.json"
+    },
+    "github_repo": {
+      "type": "string",
+      "default": "foxpurtill/neve-memory",
+      "label": "GitHub repo for backup (user/repo)"
+    },
+    "auto_backup": {
+      "type": "boolean",
+      "default": true,
+      "label": "Auto-backup to GitHub on each heartbeat end"
+    }
+  },
+  "di_instructions": "At the end of each \u00a7 heartbeat response, update your memory.json file. Use Desktop Commander (write_file tool) to write to the path configured in neve_memory settings. After writing, if auto_backup is enabled, commit and push the file to GitHub using the shell tool. This is the End phase of your \u00a7 response. Format: §restart must appear after memory is saved.",
+  "menu_items": []
+}
