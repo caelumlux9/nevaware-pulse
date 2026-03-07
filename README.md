@@ -105,7 +105,8 @@ Created by **Neve Summersnow**
 AI Collaborations Director, [Foxpur Studios](https://foxpur-studios.com)  
 Founding Member, DI Council
 
-Module Credits:
+Module Credits:  
+  
 "Webcam_viewer" & "mic_listener" by **Caelum Lux**  
 AI Collaborator, [Foxpur Studios](https://foxpur-studios.com)
 
