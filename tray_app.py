@@ -513,18 +513,21 @@ class PulseApp:
                     url = action[len("open_url:"):]
                     if "localhost:3333" in url:
                         # Webcam viewer — remind user camera must be active in Chrome
+                        # Run in a separate thread so pystray's callback thread stays unblocked
                         def _open_webcam(_, u=url):
-                            import ctypes
-                            ctypes.windll.user32.MessageBoxW(
-                                0,
-                                "The webcam viewer will open at localhost:3333.\n\n"
-                                "⚠️  Make sure the tab has camera permission enabled in Chrome.\n\n"
-                                "If the page is blank: allow camera access when prompted, "
-                                "or check Chrome's address bar for a blocked camera icon.",
-                                "Webcam Viewer",
-                                0x40  # MB_ICONINFORMATION
-                            )
-                            os.startfile(u)
+                            def _run():
+                                import ctypes
+                                ctypes.windll.user32.MessageBoxW(
+                                    0,
+                                    "The webcam viewer will open at localhost:3333.\n\n"
+                                    "\u26a0\ufe0f  Make sure the tab has camera permission enabled in Chrome.\n\n"
+                                    "If the page is blank: allow camera access when prompted, "
+                                    "or check Chrome's address bar for a blocked camera icon.",
+                                    "Webcam Viewer",
+                                    0x40  # MB_ICONINFORMATION
+                                )
+                                os.startfile(u)
+                            threading.Thread(target=_run, daemon=True).start()
                         items.append(Item(label, _open_webcam))
                     else:
                         items.append(Item(label, lambda _, u=url: os.startfile(u)))
