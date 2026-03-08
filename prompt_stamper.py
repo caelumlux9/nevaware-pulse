@@ -3,7 +3,8 @@ prompt_stamper.py — Timestamp injection on Fox's outgoing prompts.
 
 Watches for Enter keypresses in the Claude window only.
 Appends [HH:MM] to the message text before it is submitted.
-Always on, regardless of tray Red/Green state.
+Active only when tray is Red (heartbeat active / Fox away).
+Suspended automatically when tray goes Green (Fox present / paused).
 
 Implementation note:
   We intercept the Enter key globally via the `keyboard` library,
@@ -125,7 +126,7 @@ def start():
 
 
 def stop():
-    """Stop the prompt stamper (unhook Enter)."""
+    """Stop the prompt stamper entirely (unhook Enter)."""
     global _active, _hook_registered
     with _lock:
         _active = False
@@ -133,3 +134,19 @@ def stop():
             keyboard.unhook_all()
             _hook_registered = False
             logger.info("prompt_stamper: Enter hook removed.")
+
+
+def pause():
+    """Suspend timestamping — Fox is present (Green mode). Hook stays registered."""
+    global _active
+    with _lock:
+        _active = False
+    logger.info("prompt_stamper: suspended (Fox present).")
+
+
+def resume():
+    """Resume timestamping — Fox is away (Red mode)."""
+    global _active
+    with _lock:
+        _active = True
+    logger.info("prompt_stamper: resumed (Fox away).")

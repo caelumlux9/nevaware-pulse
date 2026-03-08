@@ -406,6 +406,12 @@ class PulseApp:
                 except Exception as e:
                     logger.warning(f"email_watcher toggle notify failed: {e}")
 
+        # Prompt stamper only runs when Fox is away (Red)
+        if self.active:
+            prompt_stamper.resume()
+        else:
+            prompt_stamper.pause()
+
         status = "Red (Fox away — heartbeat active)" if self.active else "Green (Fox present — heartbeat paused, modules running)"
         logger.info(f"State toggled: {status}")
 
@@ -531,8 +537,10 @@ class PulseApp:
             self.heartbeat_controller.start()
             self.heartbeat_controller.pause()
 
-        # Start prompt stamper (always on)
+        # Start prompt stamper — active only when Red (Fox away)
         prompt_stamper.start()
+        if not self.active:
+            prompt_stamper.pause()
 
         # Start emoji picker
         self.emoji = ep.EmojiPicker(config_path=str(CONFIG_PATH))
