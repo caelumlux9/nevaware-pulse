@@ -512,12 +512,20 @@ class PulseApp:
                 if action.startswith("open_url:"):
                     url = action[len("open_url:"):]
                     if "localhost:3333" in url:
-                        # Webcam viewer — use ShellExecute via ctypes, most reliable from pythonw
+                        # Webcam viewer — show instructions, user must open manually
                         def _open_webcam(_, u=url):
                             def _run():
                                 import ctypes
-                                ctypes.windll.shell32.ShellExecuteW(
-                                    None, "open", u, None, None, 1
+                                ctypes.windll.user32.MessageBoxW(
+                                    0,
+                                    "To give Neve webcam access:\n\n"
+                                    "1. Open Chrome\n"
+                                    "2. Go to: http://localhost:3333\n"
+                                    "3. Allow camera access when prompted\n"
+                                    "4. Minimize the tab — leave it running\n\n"
+                                    "Neve can then see through the webcam during sessions.",
+                                    "Webcam Setup",
+                                    0x40  # MB_ICONINFORMATION
                                 )
                             threading.Thread(target=_run, daemon=True).start()
                         items.append(Item(label, _open_webcam))
