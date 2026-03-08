@@ -549,10 +549,10 @@ class PulseApp:
             self.heartbeat_controller.start()
             self.heartbeat_controller.pause()
 
-        # Start prompt stamper — active only when Red (Fox away)
+        # Start prompt stamper — only hooks Enter when Red (Fox away)
+        # Start paused regardless of saved state — Fox is present at launch
         prompt_stamper.start()
-        if not self.active:
-            prompt_stamper.pause()
+        prompt_stamper.pause()  # Always start Green — never intercept Enter at launch
 
         # Start emoji picker
         self.emoji = ep.EmojiPicker(config_path=str(CONFIG_PATH))

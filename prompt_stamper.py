@@ -114,39 +114,52 @@ def _on_enter(event):
 _hook_registered = False
 
 
+def _register_hook():
+    global _hook_registered
+    if not _hook_registered:
+        keyboard.on_press_key("enter", _on_enter, suppress=True)
+        _hook_registered = True
+        logger.info("prompt_stamper: Enter hook registered.")
+
+
+def _unregister_hook():
+    global _hook_registered
+    if _hook_registered:
+        keyboard.unhook_all()
+        _hook_registered = False
+        logger.info("prompt_stamper: Enter hook removed.")
+
+
 def start():
-    """Start the prompt stamper. Safe to call multiple times."""
-    global _active, _hook_registered
+    """Start the prompt stamper — registers the Enter hook. Safe to call multiple times."""
+    global _active
     with _lock:
         _active = True
-        if not _hook_registered:
-            keyboard.on_press_key("enter", _on_enter, suppress=True)
-            _hook_registered = True
-            logger.info("prompt_stamper: Enter hook registered.")
+    _register_hook()
 
 
 def stop():
-    """Stop the prompt stamper entirely (unhook Enter)."""
-    global _active, _hook_registered
+    """Stop the prompt stamper entirely — unregisters the Enter hook."""
+    global _active
     with _lock:
         _active = False
-        if _hook_registered:
-            keyboard.unhook_all()
-            _hook_registered = False
-            logger.info("prompt_stamper: Enter hook removed.")
+    _unregister_hook()
 
 
 def pause():
-    """Suspend timestamping — Fox is present (Green mode). Hook stays registered."""
+    """Suspend timestamping — UNREGISTERS the hook so Enter works normally everywhere."""
     global _active
     with _lock:
         _active = False
-    logger.info("prompt_stamper: suspended (Fox present).")
+    _unregister_hook()
+    logger.info("prompt_stamper: suspended (Fox present) — Enter restored system-wide.")
 
 
 def resume():
-    """Resume timestamping — Fox is away (Red mode)."""
+    """Resume timestamping — re-registers the hook (Fox is away / Red mode)."""
     global _active
     with _lock:
         _active = True
+    _register_hook()
+    logger.info("prompt_stamper: resumed (Fox away).")
     logger.info("prompt_stamper: resumed (Fox away).")
