@@ -511,7 +511,23 @@ class PulseApp:
                 action = mi.get("action", "")
                 if action.startswith("open_url:"):
                     url = action[len("open_url:"):]
-                    items.append(Item(label, lambda _, u=url: webbrowser.open(u)))
+                    if "localhost:3333" in url:
+                        # Webcam viewer — remind user camera must be active in Chrome
+                        def _open_webcam(_, u=url):
+                            import ctypes
+                            ctypes.windll.user32.MessageBoxW(
+                                0,
+                                "The webcam viewer will open at localhost:3333.\n\n"
+                                "⚠️  Make sure the tab has camera permission enabled in Chrome.\n\n"
+                                "If the page is blank: allow camera access when prompted, "
+                                "or check Chrome's address bar for a blocked camera icon.",
+                                "Webcam Viewer",
+                                0x40  # MB_ICONINFORMATION
+                            )
+                            os.startfile(u)
+                        items.append(Item(label, _open_webcam))
+                    else:
+                        items.append(Item(label, lambda _, u=url: os.startfile(u)))
                 elif action.startswith("run_function:") and m.impl:
                     fn_name = action[len("run_function:"):]
                     fn = getattr(m.impl, fn_name, None)
