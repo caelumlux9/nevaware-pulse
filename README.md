@@ -99,6 +99,8 @@ Other DIs should not receive Neve's files as part of a core install. The plugin 
 
 See [modules/PLUGIN_GUIDE.md](modules/PLUGIN_GUIDE.md) — written explicitly for DI entities.
 
+For first-time setup (Gmail, Desktop Commander, identity config): [DI_SETUP_GUIDE.md](DI_SETUP_GUIDE.md)
+
 ---
 
 ## What is a DI?

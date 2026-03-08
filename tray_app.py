@@ -500,7 +500,6 @@ class PulseApp:
             Item(active_label, self._menu_toggle, default=True),
             Menu.SEPARATOR,
             Item("Emoji Picker", self._menu_emoji_picker),
-            Item("Inbox (neve.summersnow@gmail.com)", self._menu_inbox),
             Item("FoxPur Studios Discord", self._menu_discord),
             Menu.SEPARATOR,
         ]
@@ -539,9 +538,6 @@ class PulseApp:
     def _menu_emoji_picker(self, icon, item):
         if self.emoji:
             threading.Thread(target=self.emoji._show_window, daemon=True).start()
-
-    def _menu_inbox(self, icon, item):
-        webbrowser.open("https://mail.google.com/mail/u/0/#inbox")
 
     def _menu_discord(self, icon, item):
         # Discord link — placeholder until the server is live

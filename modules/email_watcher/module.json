@@ -12,7 +12,7 @@
   "menu_items": [
     {
       "label": "Inbox (neve.summersnow@gmail.com)",
-      "action": "open_url:https://mail.google.com/mail/u/0/#inbox"
+      "action": "open_url:https://mail.google.com/mail/u/2/#inbox"
     }
   ]
 }
